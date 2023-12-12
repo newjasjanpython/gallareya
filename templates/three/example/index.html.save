@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>3D Art Museum</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		<link rel="stylesheet" type="text/css" href="/assets/three/example/3DArtMuseum.css">
+	</head>
+	<body>
+		<div id="pleasewait">
+			<div id="pleasewaitcontainer">
+				<div class="lds-spinner"></div>
+			</div>
+		</div>
+
+		<div id="buttonenter"><div>Asarlarni ko'rish</div></div>
+		<div id="content"><div id="container"></div></div>
+		<div id="controls" style="flex-direction: column">
+			<div id="controls_minus" style="visibility: hidden !important;"></div>
+			<div id="controls_plus" style="visibility: hidden !important;"></div>
+			<a href="?page=1{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">Asosiy</a>
+			<a href="?page=1{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">1-xona</a>
+			<a href="?page=2{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">2-xona</a>
+			<a href="?page=2{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">2-xona</a>
+			<a href="?page=3{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">3-xona</a>
+			<a href="?page=4{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">4-xona</a>
+			<a href="?page=5{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">5-xona</a>
+			<a href="?page=6{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">6-xona</a>
+			<a href="?page=7{% if request.GET.artist %}&artist={{ request.GET.artist}}{% endif %}{% if request.GET.category %}&category={{ request.GET.category}}{% endif %}">7-xona</a>
+		</div>
+		<div id="info"><div id="infotext"></div></div>
+		<div id="about">{{ room_data.name }}</div>
+
+		<script>
+		let wallImageUrl = '{{ page.wall_image }}';
+		</script>
+
+		<script src="/assets/three/example/3DArtMuseumPleaseRotate.js"></script>
+		<script src="/assets/three/example/3DArtMuseum.js"></script>
+		<script>
+			drawRoom();
+
+			{% if page.object_list.0.image %}
+			addToLeft({{ page.object_list.0.image_width }},  200, "{{ page.object_list.0.framed }}", "", "{{ page.object_list.0.about }}");
+			
+			{% endif %}{% if page.object_list.1.image %}
+			addToLeft({{ page.object_list.1.image_width }},  125, "{{ page.object_list.1.framed }}", "", "{{ page.object_list.1.about }}");
+			
+			{% endif %}{% if page.object_list.2.image %}
+			addToLeft({{ page.object_list.2.image_width }},   50, "{{ page.object_list.2.framed }}", "", "{{ page.object_list.2.about }}");
+			
+			{% endif %}{% if page.object_list.3.image %}
+			addToLeft({{ page.object_list.3.image_width }},  -50, "{{ page.object_list.3.framed }}", "", "{{ page.object_list.3.about }}");
+			
+			{% endif %}{% if page.object_list.4.image %}
+			addToLeft({{ page.object_list.4.image_width }}, -160, "{{ page.object_list.4.framed }}", "", "{{ page.object_list.4.about }}");
+
+			{% endif %}
+			{% if page.object_list.5.image %}
+			addToFront({{ page.object_list.5.image_width }}, -320, "{{ page.object_list.5.framed }}", "", "{{ page.object_list.5.about }}");
+			
+			{% endif %}{% if page.object_list.6.image %}
+			addToFront({{ page.object_list.6.image_width }}, -250, "{{ page.object_list.6.framed }}", "", "{{ page.object_list.6.about }}");
+			
+			{% endif %}{% if page.object_list.7.image %}
+			addToFront({{ page.object_list.7.image_width }}, -170, "{{ page.object_list.7.framed }}", "", "{{ page.object_list.7.about }}");
+			
+			{% endif %}{% if page.object_list.8.image %}
+			addToFront({{ page.object_list.8.image_width }},  -80, "{{ page.object_list.8.framed }}", "", "{{ page.object_list.8.about }}");
+			
+			{% endif %}{% if page.object_list.9.image %}
+			addToFront({{ page.object_list.9.image_width }},    0, "{{ page.object_list.9.framed }}", "", "{{ page.object_list.9.about }}");
+
+			{% endif %}
+			{% if page.object_list.10.image  %}
+			addToRight({{ page.object_list.10.image_width }}, -160, "{{ page.object_list.10.framed }}", "", "{{  page.object_list.10.about }}");
+			
+			{% endif %}{% if page.object_list.11.image  %}
+			addToRight({{ page.object_list.11.image_width }},  -50, "{{ page.object_list.11.framed }}", "", "{{  page.object_list.11.about }}");
+			
+			{% endif %}{% if page.object_list.12.image  %}
+			addToRight({{ page.object_list.12.image_width }},   50, "{{ page.object_list.12.framed }}", "", "{{  page.object_list.12.about }}");
+			
+			{% endif %}{% if page.object_list.13.image  %}
+			addToRight({{ page.object_list.13.image_width }},  125, "{{ page.object_list.13.framed }}", "", "{{  page.object_list.13.about }}");
+			
+			{% endif %}{% if page.object_list.14.image  %}
+			addToRight({{ page.object_list.14.image_width }},  200, "{{ page.object_list.14.framed }}", "", "{{  page.object_list.14.about }}");
+
+			{% endif %}
+			{% if page.object_list.15.image  %}
+			addToBack({{ page.object_list.15.image_width }},    0, "{{ page.object_list.15.framed }}", "", "{{  page.object_list.15.about }}");
+			
+			{% endif %}{% if page.object_list.16.image  %}
+			addToBack({{ page.object_list.16.image_width }},  -80, "{{ page.object_list.16.framed }}", "", "{{  page.object_list.16.about }}");
+			
+			{% endif %}{% if page.object_list.17.image  %}
+			addToBack({{ page.object_list.17.image_width }}, -170, "{{ page.object_list.17.framed }}", "", "{{  page.object_list.17.about }}");
+			
+			{% endif %}{% if page.object_list.18.image  %}
+			addToBack({{ page.object_list.18.image_width }}, -250, "{{ page.object_list.18.framed }}", "", "{{  page.object_list.18.about }}");
+			
+			{% endif %}{% if page.object_list.19.image  %}
+			addToBack({{ page.object_list.19.image_width }}, -320, "{{ page.object_list.19.framed }}", "", "{{  page.object_list.19.about }}");
+
+			{% endif %}
+			renderRoom();
+		</script>
+	</body>
+</html>

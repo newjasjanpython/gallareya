@@ -1,0 +1,77 @@
+{% extends 'cadmin/base.html' %}
+{% block content %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <h2>{{ name_model }}</h2>
+                    </div>
+                    <div class="col-12 text-end">
+                        <a href="/admin/{{ page_name }}-admin-page-view/create" class="btn btn-secondary">
+                            <i class="bi bi-plus-lg"></i>
+                            Qo'shish
+                        </a>
+                    </div>
+                    {% for i in list_models_page.object_list %}
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-3">
+                              <div class="row">
+                                <div style="overflow: hidden;width: 200px;" class="p-0 m-0">
+                                    <img src="{{ i.get_image }}" alt="" class="img-fluid rounded-2 shadow">
+                                </div>
+                                <div class="col-8">
+                                  <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">#{{ i.pk }}</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                      {{ i.get_name }}
+                                    </h5>
+                                    <p>{{ i.get_text }}</p>
+                                  </div>
+                                </div>
+                                <div class="col text-end">
+                                    <a href="/admin/{{ page_name }}-admin-page-view/{{ i.pk }}/edit">
+                                      <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="bi bi-chevron-right text-lg opacity-10" aria-hidden="true"></i>
+                                      </div>
+                                    </a>
+                                    <a href="/admin/{{ page_name }}-admin-page-view/{{ i.pk }}/delete" class="ms-2">
+                                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                          <i class="bi bi-trash2-fill text-lg opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-12">
+                        <ul class="pagination w-100 justify-content-between">
+                            {% if list_models_page.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ list_models_page.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% for i in list_models_page.page_range %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+
+                            {% if list_models_page.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ list_models_page.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

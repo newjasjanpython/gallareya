@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="contact">
+    <div class="cfoot">
+        <div style="height: 50px;"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <h3>Fikr va mulohazalar</h3>
+                    <p>* Maydonlar to`ldirilishi shart</p>
+
+                    <form action="/contact/" class="form" method="post">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input">
+                                    <input type="text" name="fullname" placeholder="Ismingiz *" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input">
+                                    <div class="icon" style="margin-left: 20px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" fill="none">
+                                            <rect x="0.25" y="0.25" width="27.5" height="19.5" rx="1.75" fill="white" stroke="#F5F5F5" stroke-width="0.5"/>
+                                            <mask id="mask0_485_6036" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="20">
+                                            <rect x="0.25" y="0.25" width="27.5" height="19.5" rx="1.75" fill="white" stroke="white" stroke-width="0.5"/>
+                                            </mask>
+                                            <g mask="url(#mask0_485_6036)">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 6.66667H28V0H0V6.66667Z" fill="#04AAC8"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 20H28V13.3334H0V20Z" fill="#23C840"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.66699 5.33337C5.07827 5.33337 5.46056 5.20923 5.77842 4.99637C5.74159 4.99881 5.70444 5.00004 5.66699 5.00004C4.74652 5.00004 4.00033 4.25385 4.00033 3.33337C4.00033 2.4129 4.74652 1.66671 5.66699 1.66671C5.70444 1.66671 5.74159 1.66794 5.77842 1.67037C5.46056 1.45752 5.07827 1.33337 4.66699 1.33337C3.56242 1.33337 2.66699 2.2288 2.66699 3.33337C2.66699 4.43794 3.56242 5.33337 4.66699 5.33337ZM8.00033 4.66671C8.00033 5.0349 7.70185 5.33337 7.33366 5.33337C6.96547 5.33337 6.66699 5.0349 6.66699 4.66671C6.66699 4.29852 6.96547 4.00004 7.33366 4.00004C7.70185 4.00004 8.00033 4.29852 8.00033 4.66671ZM10.0003 2.66671C10.3685 2.66671 10.667 2.36823 10.667 2.00004C10.667 1.63185 10.3685 1.33337 10.0003 1.33337C9.63214 1.33337 9.33366 1.63185 9.33366 2.00004C9.33366 2.36823 9.63214 2.66671 10.0003 2.66671ZM13.3337 2.00004C13.3337 2.36823 13.0352 2.66671 12.667 2.66671C12.2988 2.66671 12.0003 2.36823 12.0003 2.00004C12.0003 1.63185 12.2988 1.33337 12.667 1.33337C13.0352 1.33337 13.3337 1.63185 13.3337 2.00004ZM12.667 5.33337C13.0352 5.33337 13.3337 5.0349 13.3337 4.66671C13.3337 4.29852 13.0352 4.00004 12.667 4.00004C12.2988 4.00004 12.0003 4.29852 12.0003 4.66671C12.0003 5.0349 12.2988 5.33337 12.667 5.33337ZM10.667 4.66671C10.667 5.0349 10.3685 5.33337 10.0003 5.33337C9.63214 5.33337 9.33366 5.0349 9.33366 4.66671C9.33366 4.29852 9.63214 4.00004 10.0003 4.00004C10.3685 4.00004 10.667 4.29852 10.667 4.66671Z" fill="white"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="tel" placeholder="+998 ** *** ** **" class="tel" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input">
+                                    <input type="email" name="email" placeholder="Email manzilingiz *" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="input">
+                                    <input type="text" name="subject" placeholder="Mavzu *" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input">
+                                    <textarea type="text" name="text" placeholder="Xabar matni *" rows="5" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="send btn btn-primary" type="submit">Jo‘natish</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="address" style="background-image: url('/assets/contact.jpg');background-size: cover;background-position: center;">
+                        <!-- <div class="datamap">
+                            <h3>Manzil:</h3>
+                            <p>Toshkent shahri, Yunusobod tumani, Sharof Rashidov ko’chasi 16a</p>
+                        </div> -->
+                        <!-- <div class="datamap">
+                            <h3>Telefon raqam:</h3>
+                            <p>+99871 123 45 67, +99871 123 45 67, +99871 123 45 67, </p>
+                        </div> -->
+                        <!-- <div class="datamap">
+                            <h3>Ish vaqti</h3>
+                            <p>Dushanba-Shanba / 08:00 dan 19:00 gacha</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="/assets/contact{% if request.session.theme == "light" %}-light{% endif %}.png" alt="none" class="mt-5 w-100">
+</section>
+<script src="/assets/admin/js/vendor/jquery/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+<script>
+    $.mask.definitions['#'] = $.mask.definitions['9'];
+    $.mask.definitions['9'] = null;
+
+    $('.tel').each((i, e) => {
+        $(e).on('focus', (v) => {
+            console.log(e);
+            $(e).setSelectionRange(0, 0);
+        });
+    });
+    $('.tel').mask("+998 (##) ###-##-##");
+</script>
+{% endblock content %}

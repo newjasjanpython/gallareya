@@ -1,0 +1,33 @@
+{% extends 'cadmin/base.html' %}
+{% block content %}
+    <div class="container-fluid py-4">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+            {% if deletable %}
+            <a href="/admin/arts-admin-page-view/1/edit" class="btn btn-danger">Ochirish</a>
+            {% endif %}
+
+            <script>
+                document.querySelectorAll('input,textarea').forEach((v) => {
+                    if (v.type == "checkbox") {
+                        v.classList.add('form-check-input');
+                    } else {
+                        v.classList.add('form-control');
+                    }
+                });
+                
+                document.querySelectorAll('select').forEach((v) => {
+                    v.classList.add('form-select');
+                });
+                
+                document.querySelectorAll('label').forEach((v) => {
+                    v.classList.add('form-label');
+                    v.textContent = v.textContent.toString().replace(':', '');
+                });
+            </script>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'profile/base.html' %}
+{% block content %}
+        <div class="content pb-3">
+            <div class="container-fluid py-3" id="table">
+
+{% include 'profile/profile.html' %}                
+
+<table id="data-table" class="mt-5">
+                    <thead>
+                        <tr class="d-flex">
+                            {% for c in columns %}
+                            <th>
+                                <span class="text">{{ c.name }}</span>
+                                {% if c.bcname %}
+                                <span class="icon filter" style="cursor: pointer;" onclick="window.location = `{{ request.path }}?{% if request.GET.filter == c.bcname %}filter=-{{ c.bcname }}{% else %}filter={{ c.bcname }}{% endif %}`;">
+                                    {% if request.session.theme == "light" %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 14 14" fill="none">
+                                        <path d="M9.04134 5.54167L6.99967 3.5L4.95801 5.54167" stroke="#1C232C" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9.04134 8.16683L6.99967 10.2085L4.95801 8.16683" stroke="#1C232C" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    {% else %}
+                                    <img src="/assets/profile/filter.png" alt="" width="22px" height="22px">
+                                    {% endif %}
+                                </span>
+                                {% endif %}
+                            </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                        <tr>
+                            {% for cell in row %}
+                            <td>
+                                {% if cell.type == "text" %}
+                                {{ cell.text }}
+                                {% elif cell.type == "html" %}
+                                {{ cell.html|safe }}
+                                {% elif cell.type == "bool" %}
+                                {% if cell.bool %}
+                                ✅ Yes
+                                {% else %}
+                                ❌ No
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>            
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section id="about-us">
+        <div style="height: 150px;"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <p class="title-text">Biz haqimizda</p>
+                    <h3>Biz bilan o'z imkoniyatlaringizni oshirib boring!</h3>
+                    <p class="text">Bizning inklyuziv "Raqamli Galereya" rasmlar, fotosuratlar va san'at asarlarining elektronik to'plami uchun onlayn platformadir. Bu yerda san'at chegara bilmaydi va barcha shaxslarning xilma-xilligini qamrab oladi. Har bir inson san'atning qudrati va go'zalligini his qilishga qodir. Turli qobiliyatlar birlashadigan, universal ijod tilini yaratadigan va chinakam qamrab oluvchi badiiy hamjamiyatni rivojlantiradigan sayohatda bizga qo'shiling.</p>
+                    {% if user.is_authenticated %}
+                    <a href="/profile/{{ user.username }}" class="btn btn-primary">O'tish: {{ user.first_name }}</a>
+                    {% else %}
+                    <a href="/register" class="btn btn-primary">Ro‘yxatdan o‘tish</a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img src="/assets/about-us.jpg" alt="" class="w-100 about-us-image">
+
+                    <style>
+                        .about-us-image {
+                            border-radius: 50px;
+                            clip-path: none;
+                            animation: imageAboutUsAnim 10s linear;
+                        }
+
+                        @keyframes imageAboutUsAnim {
+                            0% {
+                                clip-path: circle(100px at 0% 0%);
+                            }
+                            26% {
+                                clip-path: circle(110px at 100% 5%);
+                            }
+                            35% {
+                                clip-path: circle(200px at 100% 100%);
+                            }
+                            50% {
+                                clip-path: circle(100px at 100% 0%);
+                            }
+                            66% {
+                                clip-path: circle(75px at 100% 50%);
+                            }
+                            76% {
+                                clip-path: circle(75px at 50% 50%);
+                            }
+                            100% {
+                                clip-path: circle(100% at 50% 50%);
+                            }
+                        }
+
+                        .about-us-data {
+                            font-size: 19px;
+                        }
+                    </style>
+                </div>
+                <div class="col-12 mt-5 mb-5">
+                    <table class="w-100">
+                        <tbody>
+                            <tr class="about-us-data">
+                                <td class="w-25">01. O'ziga xoslik.</td>
+                                <td class="w-75">Bizning galereyamizda turli xil san'at qirralarining eng yirik jamoat kolleksiyasini namoyish qiluvchi noyob ko'rgazmalar majmuasini kashf qiling.</td>
+                            </tr>
+                            <tr class="about-us-data">
+                                <td class="w-25">02. Sifat.</td>
+                                <td class="w-75">Raqamli galereya bugungi kunning eng yaxshi rassomlarining yuzlab yuqori sifatli asarlari uchun platforma hisoblanadi, bizning saytimiz ular bilan tanishishga yordam beradi.</td>
+                            </tr>
+                            <tr class="about-us-data">
+                                <td class="w-25">03. Foydalanish imkoniyati.</td>
+                                <td class="w-75">Galereya katta guruhlar va ma'lum miqdordagi odamlar uchun turli turdagi tadbirlarni keng tanlov bilan taklif etadi.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

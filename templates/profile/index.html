@@ -1,0 +1,40 @@
+{% extends 'profile/base.html' %}
+        {% block content %}
+        {% with vuser.artist_obj.fullname as fn %}
+        <div class="content pb-3">
+            <div class="container-fluid" id="images-sys">
+                <div class="d-flex justify-content-between align-items-center my-3 content-text">
+                    {% if vuser == user %}
+                    <h4 class="">Mening fotosuratlarim</h4>
+                    <a type="button" class="btn btn-primary new" href="https://t.me/elektron_galareya_bot?start={{ user.artist_obj.secure_key }}" target="_blank">
+                        <i class="bi bi-plus-circle"></i>
+                        Yuklash
+                    </a>
+                    {% else %}
+                    <h4 class="">{{ vuser.first_name }}ning fotosuratlari</h4>
+                    {% endif %}
+                </div>
+
+		{% include 'profile/profile.html' %}
+                
+                <div class="contener mt-5">
+                    <div class="row g-3">
+                        {% for i in vuser.artist_obj.arts.all %}
+                        <a class="card_div col-12 col-xxl-3 col-lg-4 col-md-6 col-sm-12 text-white" href="/view:{{ i.pk }}/art">
+                            <div class="card text-left w-100">
+                                <img class="card-img-top bg-dark card-size-equal" src="{% if i.image %}{{ i.image.url }}{% else %}{{ i.image_url }}{% endif %}" alt="{{ i.name }}">
+                                <div class="data">
+                                    <h3>{{ fn }}</h3>
+                                    <p>Muallif</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endwith %}
+        {% endblock %}

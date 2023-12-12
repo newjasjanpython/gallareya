@@ -1,0 +1,28 @@
+<section id="top-category">
+    <div class="title">
+        <h3>Top kategoriyalar</h3>
+    </div>
+    <div class="categories">
+        {% for i in categories %}
+        <a href="/selected-by-categories?categories={{ i.pk }}," class="category">{{ i.name }}</a>
+        {% endfor %}
+        <a href="/selected-by-categories?categories={{ i.pk }}," class="category">📌 Koproq</a>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {% for i in view_arts %}
+            <div class="swiper-slide" onclick="window.location = `/profile/{{ i.artist.user.username }}/arts-only`;" style="cursor: pointer;" data-pk="{{ i.pk }}">
+
+                <img src="{{ i.image.url }}" alt="{{ i.name }}">
+
+                <div class="data">
+                    <h3>{{ i.name }}</h3>
+                    <p>{{ i.about|truncatechars:"18" }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination" style="bottom: 30px;"></div>
+    </div>
+
+</section>

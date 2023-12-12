@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="/assets/rates.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css">
+<div id="about-image">
+    <div style="min-height: 100px;"></div>
+    <div class="container py-3">
+        <a class="image glightbox d-flex align-items-center justify-content-center w-100" href="{{ object.image.url }}">
+            {% if object.get_extension == '.pdf' %}
+            <iframe src="/frame/pdf?link={{ object.image.url }}" id="image" frameborder="0"></iframe>
+            {% else %}
+            <img src="{{ object.image.url }}" alt="" id="image" fullscreen="false" style="transition: 0.6s all;">
+            {% endif %}
+            <script>
+                if (window.innerHeight < window.innerWidth) {
+                    document.getElementById('image').style.height = (window.innerHeight - 200) + 'px';
+                    {% if object.get_extension == '.pdf' %}
+                    document.getElementById('image').style.width = '100%';
+                    {% else %}
+                    document.getElementById('image').style.width = 'fit-content';
+                    {% endif %}
+                } else {
+                    document.getElementById('image').style.height = 'fit-content';
+                    document.getElementById('image').style.width = '100%';
+                }
+            </script>
+        </a>
+        <div class="image-texts mt-4">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <h3><a href="/profile/{{ object.artist.user.slug }}" style="text-decoration: none;">{{ object.artist.user.first_name }}</a></h3>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 d-flex" style="justify-content: right;">
+                    <a href="/like/{{ object.pk }}"
+                        style="display: flex;align-items: center;justify-content: center;gap: 10px;text-decoration: none;">
+                        <span>{{ object.likes }}</span>
+                        {% if request.session.theme == "dark" or not request.session.theme %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                            <path
+                                d="M24.42 33.15H18.72C17.88 33.15 16.05 32.895 15.075 31.92L10.53 28.41L11.91 26.625L16.56 30.225C16.935 30.585 17.88 30.885 18.72 30.885H24.42C25.77 30.885 27.225 29.805 27.525 28.59L31.155 17.565C31.395 16.905 31.35 16.305 31.035 15.87C30.705 15.405 30.105 15.135 29.37 15.135H23.37C22.59 15.135 21.87 14.805 21.375 14.235C20.865 13.65 20.64 12.87 20.76 12.06L21.51 7.24498C21.69 6.40498 21.12 5.45999 20.31 5.18999C19.575 4.91999 18.63 5.30998 18.3 5.78998L12.15 14.94L10.29 13.695L16.44 4.54499C17.385 3.13499 19.455 2.45999 21.075 3.07499C22.95 3.68999 24.15 5.75998 23.73 7.67999L22.995 12.405C22.98 12.51 22.98 12.66 23.085 12.78C23.16 12.855 23.265 12.9 23.385 12.9H29.385C30.855 12.9 32.13 13.515 32.88 14.58C33.615 15.615 33.765 16.98 33.285 18.3L29.7 29.22C29.145 31.395 26.835 33.15 24.42 33.15Z"
+                                fill="white" />
+                            <path
+                                d="M8.07007 31.5001H6.57007C3.79507 31.5001 2.44507 30.1951 2.44507 27.5251V12.8251C2.44507 10.1551 3.79507 8.8501 6.57007 8.8501H8.07007C10.8451 8.8501 12.1951 10.1551 12.1951 12.8251V27.5251C12.1951 30.1951 10.8451 31.5001 8.07007 31.5001ZM6.57007 11.1001C4.93507 11.1001 4.69507 11.4901 4.69507 12.8251V27.5251C4.69507 28.8601 4.93507 29.2501 6.57007 29.2501H8.07007C9.70507 29.2501 9.94507 28.8601 9.94507 27.5251V12.8251C9.94507 11.4901 9.70507 11.1001 8.07007 11.1001H6.57007Z"
+                                fill="white" />
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                            <path
+                                d="M24.42 33.1502H18.72C17.88 33.1502 16.05 32.8952 15.075 31.9202L10.53 28.4102L11.91 26.6252L16.56 30.2252C16.935 30.5852 17.88 30.8852 18.72 30.8852H24.42C25.77 30.8852 27.225 29.8052 27.525 28.5902L31.155 17.5652C31.395 16.9052 31.35 16.3052 31.035 15.8702C30.705 15.4052 30.105 15.1352 29.37 15.1352H23.37C22.59 15.1352 21.87 14.8052 21.375 14.2352C20.865 13.6502 20.64 12.8702 20.76 12.0602L21.51 7.24523C21.69 6.40523 21.12 5.46023 20.31 5.19023C19.575 4.92023 18.63 5.31023 18.3 5.79023L12.15 14.9402L10.29 13.6952L16.44 4.54523C17.385 3.13523 19.455 2.46023 21.075 3.07523C22.95 3.69023 24.15 5.76023 23.73 7.68023L22.995 12.4052C22.98 12.5102 22.98 12.6602 23.085 12.7802C23.16 12.8552 23.265 12.9002 23.385 12.9002H29.385C30.855 12.9002 32.13 13.5152 32.88 14.5802C33.615 15.6152 33.765 16.9802 33.285 18.3002L29.7 29.2202C29.145 31.3952 26.835 33.1502 24.42 33.1502Z"
+                                fill="#1C232C" />
+                            <path
+                                d="M8.07007 31.5001H6.57007C3.79507 31.5001 2.44507 30.1951 2.44507 27.5251V12.8251C2.44507 10.1551 3.79507 8.8501 6.57007 8.8501H8.07007C10.8451 8.8501 12.1951 10.1551 12.1951 12.8251V27.5251C12.1951 30.1951 10.8451 31.5001 8.07007 31.5001ZM6.57007 11.1001C4.93507 11.1001 4.69507 11.4901 4.69507 12.8251V27.5251C4.69507 28.8601 4.93507 29.2501 6.57007 29.2501H8.07007C9.70507 29.2501 9.94507 28.8601 9.94507 27.5251V12.8251C9.94507 11.4901 9.70507 11.1001 8.07007 11.1001H6.57007Z"
+                                fill="#1C232C" />
+                        </svg>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                {% if not is_branding %}
+                {% if display %}
+                <div class="col-12 mt-3">
+                    <a href="/room?category={{ object.categories.all.0.pk }}" class="btn btn-primary w-100">3D xonada
+                        tomosha qilish</a>
+                </div>
+                {% endif %}
+                {% endif %}
+                <div class="col-12 mb-3">
+                    <hr>
+                    {% for i in object.feedbacks.all %}
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="d-flex"
+                                style="gap: 10px;color: {% if request.session.theme == 'dark' or not request.session.theme %}#FFF;{% else %}#1C232C{% endif %};">
+                                <img src="{% if i.web_user.image %}{{ i.web_user.image.url }}{% else %}https://cdn-icons-png.flaticon.com/512/3135/3135715.png{% endif %}"
+                                    alt="no" height="64px">
+                                <div class="data">
+                                    <h3>{{ i.web_user.user.first_name }}</h3>
+                                    <p class="m-0">{{ i.message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h6 class="text-muted">Birinchi fikrni qoldiring</h6>
+                    {% endfor %}
+                </div>
+                <!-- <div class="col-12">
+                        <input id="input-1" name="input-1" class="rating rating-input" data-min="0" data-max="5" data-step="0.1" value="0.0">
+                    </div> -->
+                <div class="col-12 mt-4">
+                    <form action="/feedback/{{ object.pk }}/" method="post">
+                        {% csrf_token %}
+                        <textarea name="text" id="text" class="form-control w-100"
+                            placeholder="Ushbu fotosurat haqida o‘z izohingizni qoldiring"></textarea>
+                        <button class="btn btn-primary mt-4">Yuborish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/admin/js/vendor/jquery/jquery.js"></script>
+<!-- {% if object.pk in request.session.likes %}
+    <script src="/assets/rates-initer.js"></script>
+    {% else %}
+    <script src="/assets/rates.js"></script>
+    {% endif %} -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js"></script>
+
+
+<script>GLightbox({selector: '.glightbox'});</script>
+{% endblock %}

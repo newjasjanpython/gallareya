@@ -1,0 +1,31 @@
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let imagesPathes = [{% for im in images %}"{{ im }}",{% endfor %}]
+        imagesPathes.forEach((value, index) => {
+            setTimeout(() => {
+		let href = document.createElement('a');
+		href.setAttribute('href', `{% if request.GET.no == 'false' %}{{ request.GET.link }}{% else %}{{ request.GET.href }}{% endif %}`);
+		href.setAttribute('target', '_blank');
+                let image = document.createElement('img');
+                image.setAttribute('src', value.replace('&amp;', '&'));
+                image.style.width = '100%';
+		href.append(image);
+                document.querySelector('body').append(href);
+            }, 1500 * index);
+        });
+    </script>
+</body>
+</html>

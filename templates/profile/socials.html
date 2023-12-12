@@ -1,0 +1,135 @@
+{% extends 'profile/base.html' %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid py-3">
+        <h1 class="mb-4">Bog'lanish</h1>
+
+	{% include 'profile/profile.html' %}
+
+        <div class="row g-3 mb-3 mt-4">
+            {% for social in vuser.socials.all %}
+            <div class="col-12">
+                <div class="d-flex position-relative align-items-center justify-content-left p-3 w-100 rounded-3" target="_blank" style="text-decoration: none;border: 1px solid {% if request.session.theme == "dark" or not request.session.theme %}#444{% else %}#bbe{% endif %};">
+                    <button type="button" class="btn btn-primary badge bg-primary position-absolute top-0 start-0 translate-middle text-white rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#editSocial{{ social.pk }}" style="font-size: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                          </svg>
+                      </button>
+
+                      <a href="{{ social.link }}" class="text-{% if request.session.theme == "dark" or not request.session.theme %}white{% else %}link{% endif %}" target="_blank" style="text-decoration: none;">
+                          <span>{{ social.icon_name }}</span>
+                          <span class="ms-2">{{ social.get_name_display }}</span>
+                      </a>
+
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if vuser == user %}
+            <div class="col-12">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="user" value="{{ vuser.pk }}">
+                    <div class="d-flex" style="gap: 15px;">
+                        <div class="select-input">
+                            <select name="name" id="name" class="form-control">
+                                {% for social in socials_avaible %}
+                                <option value="{{ social.0 }}">{{ social.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            <i class="fa fa-chevron-down"></i>
+                        </div>
+                        <div class="input">
+                            <input type="text" class="form-control" placeholder="https://example.com/username" style="max-width: 500px;" name="link">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            Qo'shish
+                        </button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if vuser == user %}
+{% for social in vuser.socials.all %}
+  <form action="" method="post">
+    <div class="modal fade" id="editSocial{{ social.pk }}" tabindex="-1" aria-labelledby="editSocial{{ social.pk }}Label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 text-dark" id="editSocial{{ social.pk }}Label">{{ social.get_name_display }} - Yangilash</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            {% csrf_token %}
+            <input type="hidden" name="edit" value="{{ social.pk }}">
+            <input type="hidden" name="user" value="{{ vuser.pk }}">
+        
+                <div class="select-input mb-3">
+                    <select name="name" id="name" class="form-control">
+                        {% for social_name in socials_avaible %}
+                        <option value="{{ social_name.0 }}" {% if social.name == social_name.0 %}selected{% endif %}>{{ social_name.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="input mb-3">
+                    <input type="text" class="form-control" placeholder="https://example.com/username" style="max-width: 500px;" name="link" value="{{ social.link }}">
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+{% endfor %}
+{% endif %}
+
+<style>
+    .select-input,
+    .input {
+        width: 100%;
+        min-height: 40px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .select-input select,
+    .input input {
+        width: 100% !important;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-shadow: none;
+        outline: none;
+        border: 0;
+
+        {% if request.session.theme == "dark" or not request.session.theme %}
+        background-color: var(--bs-dark) !important;
+        color: white !important;
+	{% else %}
+	background-color: var(--bs-light) !important;
+        color: black !important;
+        {% endif %}
+        border: 1px solid {% if request.session.theme == "dark" or not request.session.theme %}#444{% else %}#eee{% endif %};
+    }
+
+    .select-input i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999999;
+    }
+</style>
+
+{% endblock content %}

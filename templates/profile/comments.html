@@ -1,0 +1,47 @@
+{% extends 'profile/base.html' %}
+{% block content %}
+        <div class="content p-3">
+            {% include 'profile/profile.html' %}
+            <div class="container-fluid py-3 mt-4" id="table">
+                <div class="row g-4">
+                    {% for art in user.artist_obj.arts.all %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card {% if request.session.theme == "light" %}bg-light{% else %}bg-dark{% endif %} h-100" style="box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.375);">
+                            <img src="{% if art.image %}{{ art.image.url }}{% else %}{{ art.image_url }}{% endif %}" alt="" class="card-img-top">
+                            <div class="card-body">
+                                <h3>{{ art.name }}</h3>
+
+                                <div class="row mt-3 g-3">
+                                    {% for c in art.feedbacks.all %}
+                                    <div class="col-12">
+                                        <div class="card {% if request.session.theme == "light" %}bg-light{% else %}bg-dark{% endif %}" style="box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.375);">
+                                            <div class="card-body">
+                                                <div class="d-flex" style="gap: 10px;">
+                                                    {% if i.web_user.image %}
+                            <img src="{{ i.webuser.image.url }}" alt="" width="64px" height="64px" style="border-radius: 50%;">
+                            {% else %}
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" width="64px" height="64px" style="border-radius: 50%;">
+                            {% endif %}
+                                                    <div class="data">
+                                                        <h3>{{ c.web_user.user.first_name }}</h3>
+                                                        <p class="m-0">{{ c.message }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+					{% empty %}
+					<h4>Sharhar yo'q</h4>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h4>Asarlar topilmadi</h4>
+                    {% endfor %}
+                </div>       
+            </div>
+        </div>
+    </main>
+{% endblock content %}

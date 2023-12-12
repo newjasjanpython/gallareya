@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+        #page404 {
+            width: 100%;
+            height: 100vh;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+        }
+    </style>
+
+    <div id="page404">
+        {% if request.session.theme == "dark" and not request.session.theme %}
+        <img src="/assets/404 Error-rafiki 1.png" alt="">
+        {% else %}
+        <img src="/assets/404 Error-rafiki 1 (1).png" alt="">
+        {% endif %}
+    </div>
+{% endblock %}

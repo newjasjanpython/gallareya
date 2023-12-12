@@ -1,0 +1,110 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .profile img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+    }
+
+    .profile .data {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .profile .data h3 {
+        font-size: 26px;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .profile .data .numbers {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 16px;
+        margin-top: 16px;
+    }
+
+    .profile a {
+        text-decoration: none;
+        margin-top: 16px;
+        font-size: 22px;
+    }
+
+    @media screen and (max-width: 678px) {
+        .profile {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile .data {
+            padding: 16px;
+        }
+    }
+</style>
+
+<div class="profile">
+    <div class="position-relative"><img src="{% if vuser.webuser.image %}{{ vuser.webuser.image.url }}{% else %}https://cdn-icons-png.flaticon.com/512/3135/3135715.png{% endif %}" alt="">
+ {% if vuser == user %}
+<button type="button" class="btn btn-primary badge- bg-primary position-absolute top-100 start-50 translate-middle text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#changeImage">
+<i class="fa fa-pen"></i>
+</button>
+    {% endif %}
+</div>
+    <div class="data">
+        {% if user == vuser %}
+        <form action="/profile/{{ user.slug }}/privacy" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="btn btn-{% if vuser.privacy %}primary{% else %}secondary{% endif %}">
+                {% if vuser.privacy %}Public{% else %}Private{% endif %}
+            </button>
+        </form>
+        {% endif %}
+
+        {% if not vuser.privacy or vuser == user %}
+        <a href="/profile/{{ vuser.slug }}">{{ vuser.username }}</a>
+        {% endif %}
+        <div class="numbers">
+            <div class="number">
+                <i class="fa fa-image"></i>
+               	{{ vuser.artist_obj.arts.count }}
+                arts
+            </div>
+            <div class="number">
+                <i class="fa fa-thumbs-up"></i>
+                {{ vuser.artist_obj.get_likes }}
+                likes
+            </div>
+        </div>
+        <h3 class="position-relative">{{ vuser.first_name }} {{ vuser.last_name }}
+
+ {% if vuser == user %}
+<button type="button" class="btn btn-primary badge bg-primary position-absolute top-0 start-100 translate-middle text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#changeName">
+<i class="fa fa-pen" style="font-size: 14px;"></i>
+</button>
+    {% endif %}
+
+</h3>
+        <p class="position-relative d-inlien-block w-auto">{{ vuser.artist_obj.about }}
+                    {% if user == vuser %}
+<button type="button" class="btn btn-primary  badge bg-primary position-absolute top-0 start-100 translate-middle text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#changeAbout" >
+<i class="fa fa-pen" style="font-size: 14px;"></i>
+</button>
+                    {% endif %}
+
+</p>
+    </div>
+</div>

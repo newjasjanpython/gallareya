@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'sections/hero.html' %}
+
+    <section id="categories">
+        <h3>Raqamli dizayn</h3>
+
+        <div class="carousel">
+            <div class="swiper-container my-ctg" style="overflow: hidden;height: 100%;">
+                <div class="swiper-wrapper">
+                    {% for i in digital_arts %}
+                    <div class="swiper-slide" onclick="window.location = `/view:{{ i.pk }}/art/`;" style="cursor: pointer;" data-end-match="?category=10">
+                        {% if i.image %}
+                        <img src="{{ i.image.url }}" alt="Image {{ forloop.counter }}" />
+                        {% else %}
+                        <img src="{{ i.image_url }}" alt="Image {{ forloop.counter }}" />
+                        {% endif %}
+                        <div class="data">
+                            <h3>{{ i.name }}</h3>
+                            <p>{{ i.about|truncatechars:"18" }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination" style="bottom: 30px;"></div>
+            </div>
+            <div class="container d-flex" style="gap: 10px">
+                <p class="m-0 mt-3 w-100">
+<button class="btn btn-primary button-slider w-100">3D xonada tomosha qilish</button></p>
+
+<p class="m-0 mt-3 w-100">
+<a href="/selected-by-categories/?categories=:10" class="btn btn-primary w-100 button-slider">Bo'limni ko'rish</a></p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="last">
+        <div class="title">
+            <h3>Fotosuratlar</h3>
+        </div>
+        <div class="swiper-container mylastswp">
+            <div class="swiper-wrapper">
+                {% for i in fotosurat %}
+                <div class="swiper-slide" style="background-image: url('{{ i.image.url }}');cursor: pointer;" onclick="window.location = `/view:{{ i.pk }}/art/`;" data-end-match="?category=11"></div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+        
+                    <div class="container d-flex" style="gap: 10px">
+                <p class="m-0 mt-3 w-100">
+<button class="btn btn-primary button-slider w-100">3D xonada tomosha qilish</button></p>
+
+<p class="m-0 mt-3 w-100">
+<a href="/selected-by-categories/?categories=:11" class="btn btn-primary w-100 button-slider">Bo'limni ko'rish</a></p>
+            </div>
+    </section>
+
+    <section id="last-swiper" class="mb-3">
+        <h3>Qo'lda chizilgan rasmlar</h3>
+
+        <div class="carousel">
+            <div class="swiper-container my-ctg" style="overflow: hidden;height: 100%;">
+                <div class="swiper-wrapper">
+                    {% for i in man_made %}
+                    <div class="swiper-slide" onclick="window.location = `/view:{{ i.pk }}/art/`;" style="cursor: pointer;" data-end-match="?category=13">
+                        {% if i.image %}
+                        <img src="{{ i.image.url }}" alt="Image {{ forloop.counter }}" />
+                        {% else %}
+                        <img src="{{ i.image_url }}" alt="Image {{ forloop.counter }}" />
+                        {% endif %}
+                        <div class="data">
+                            <h3>{{ i.name }}</h3>
+                            <p>{{ i.about|truncatechars:"18" }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination" style="bottom: 30px;"></div>
+            </div>
+                        <div class="container d-flex" style="gap: 10px">
+                <p class="m-0 mt-3 w-100">
+<button class="btn btn-primary button-slider w-100">3D xonada tomosha qilish</button></p>
+
+<p class="m-0 mt-3 w-100">
+<a href="/selected-by-categories/?categories=:13" class="btn btn-primary w-100 button-slider">Bo'limni ko'rish</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="branding">
+        <h3>Branding</h3>
+        <div class="container mt-5">
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="image-list">
+                        {% for i in branding %}
+                        <div class="image" style="cursor: pointer;" onclick="window.location = `/view:{{ i.pk }}/art`;">
+                            {% if i.get_extension == '.pdf' %}
+                            <iframe src="{{ i.image.url }}#toolbar=0&navpanes=0&scrollbar=0" style="width: 100%;height: 100%;" id="myIFrame{{ i.pk }}">
+Loading pdf
+</iframe>
+                            {% else %}
+                            {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="" class="h-100">
+                            {% else %}
+                            <img src="{{ i.image_url }}" alt="" class="h-100">
+                            {% endif %}
+                            {% endif %}
+
+<div class="data">
+<h3>{{ i.artist.fullname }}</h3>
+<p>{{ i.name }}</p>
+</div>
+                        </div>
+                        {% empty %}
+                        <h3>Rasmlar yo'q</h3>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lights" id="light1"></div>
+    <div class="lights" id="light2"></div>
+    <div class="lights" id="light3"></div>
+    <div class="lights" id="light4"></div>
+
+    <script src="/assets/admin/js/vendor/jquery/jquery.js"></script>
+    <script>
+        $(window).resize((event) => {
+            $('.image').each((i, e) => {
+                $(e).height($(e).width());
+                $(e).children('iframe').height($(e).width());
+            });
+        });
+
+        $('.image').each((i, e) => {
+            $(e).height($(e).width());
+            $(e).children('iframe').height($(e).width());
+        });
+    </script>
+{% endblock content %}

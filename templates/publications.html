@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section id="publications">
+        <div style="height: 150px;"></div>
+        <div class="container mb-5">
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="image-list">
+                        {% for i in object_list %}
+                        <div class="image" style="cursor: pointer;" onclick="window.location = `/view:{{ i.pk }}/art`;" id="restimage{{ i.pk }}">
+                            {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="" class="h-100">
+                            {% else %}
+                            <img src="{{ i.image_url }}" alt="" class="h-100">
+                            {% endif %}
+                            <div class="data">
+                                <h3>{{ i.name }}</h3>
+                                <span>Muallif: {{ i.artist.fullname }}</span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <h3>Rasmlar yo'q</h3>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px;"></div>
+
+    {% with view.categories.0 as i %}
+        {% if i.has_image %}
+        {% if request.session.theme == "dark" or not request.session.theme %}
+        <img src="{{ i.dark_image.url }}" alt="">
+        {% else %}
+        <img src="{{ i.light_image.url }}" alt="">
+        {% endif %}
+        {% endif %}
+    {% endwith %}
+    </section>
+
+    <script src="/assets/admin/js/vendor/jquery/jquery.js"></script>
+    <script>
+        $(window).resize((event) => {
+            $('.image').each((i, e) => {
+                $(e).height($(e).width());
+            });
+        });
+
+        $('.image').each((i, e) => {
+            $(e).height($(e).width());
+        });
+
+        let categories = [{% for c in view.categories %}{{ c.pk }},{% endfor %}];
+
+        $('.filter').each((index, elem) => {
+            if (categories.includes(Number($(elem).data('pk')))) {
+                $(elem).addClass('active');
+            }
+        });
+
+        $('.filter').each((index, elem) => {
+            $(elem).click((event) => {
+                if ($(elem).hasClass('active')) {
+                    window.location = `/selected-by-categories?categories={% for c in view.categories %}{{ c.pk }},{% endfor %}|${$(elem).data('pk')}`;
+                } else {
+                    window.location = `/selected-by-categories?categories={% for c in view.categories %}{{ c.pk }},{% endfor %}:${$(elem).data('pk')}`;
+                }
+            });
+        });
+    </script>
+{% endblock %}
