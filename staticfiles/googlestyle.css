@@ -1,0 +1,12 @@
+.google-sign-in {
+    background-color: rgb(218, 83, 83);
+    padding: 16px 30px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 17px;
+}
