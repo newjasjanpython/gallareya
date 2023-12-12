@@ -23,6 +23,4 @@ urlpatterns = [
     path('get-paged-art-image/', random_art_object),
     path('reupload', regenerate_images),
     path('frame-image-properly', frame_image__upload),
-    path('frame/pdf', view_pdf),
-    path('get-pdf-image', get_pdf_image),
 ]

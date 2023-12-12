@@ -4,13 +4,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.views.generic import *
-import pypdfium2 as pdfium
 from .forms import MultiModelCreationForm
 from artist.models import MeUser
 from .models import *
 import threading
 import requests
-import os
 import io
 
 
@@ -55,34 +53,6 @@ class IndexView(TemplateView):
 def autoredirect_by_image(req):
     art = get_object_or_404(Art, image__iendswith=req.GET.get('path', 'none-dfahkdjsfhljasdhlfkjalsd-s.jpg'))
     return redirect(f'/view:{art.pk}/art')
-
-
-def view_pdf(req):
-    link = req.GET.get('link')
-    pages = []
-    if link:
-        path = os.path.join(os.getcwd(), link.strip('/').strip('\\'))
-        pdf = pdfium.PdfDocument(path)
-        for i in range(len(pdf)):
-            pages.append(f'/get-pdf-image?index=%s&link=%s' % (str(i), link))
-        pdf.close()
-
-    return render(req, 'iframe.pdf.html', {'images': pages})
-
-
-def get_pdf_image(req):
-    link = req.GET.get('link')
-    index = req.GET.get('index')
-    if link and index and index.isdigit():
-        path = os.path.join(os.getcwd(), link.strip('/').strip('\\'))
-        pdf = pdfium.PdfDocument(path)
-        buffer = io.BytesIO()
-        pdf[int(index)].render().to_pil().save(buffer, format='JPEG')
-        rea_response = HttpResponse(buffer.getvalue(), content_type="image/jpg")
-        rea_response['Content-Disappointment'] = 'attachment; filename="image.png"'
-        pdf.close()
-        return rea_response
-    raise Http404("No Image Found")
 
 
 class AboutUsView(TemplateView):
